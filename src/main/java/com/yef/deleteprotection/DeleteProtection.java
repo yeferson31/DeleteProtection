@@ -54,11 +54,18 @@ public final class DeleteProtection extends JavaPlugin {
         World world = WorldGuard.getInstance().getPlatform().getMatcher().getWorldByName("world");
         RegionManager regiones = container.get(world);
         List<ProtectedRegion> regionesEncontradas = new ArrayList<>();
+        List<OfflinePlayer> PlayerWithRegion = new ArrayList<>();
 
             if(regiones.getRegions() != null) {
                 for (ProtectedRegion region : regiones.getRegions().values()) {
-                    region.getOwners().getPlayers();
-                    playersWithRegion.addAll(region.getOwners().getPlayers());
+                    for (OfflinePlayer players : Bukkit.getOfflinePlayers()){
+                        if (region.getOwners().contains(players.getUniqueId())) {
+                            //getLogger().info("Region encontrada del jugador: " + offlinePlayer.getName() + region.getId());
+                            PlayerWithRegion.add(players);
+                        }else {
+                            //getLogger().info("Region NO encontrada del jugador: " + offlinePlayer.getName());
+                        }
+                    }
                 }
             }
 
